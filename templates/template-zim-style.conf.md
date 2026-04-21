@@ -31,6 +31,8 @@ wrapped-lines-linespacing=0
 font={{font}} {{font-size}}
 justify=LEFT
 pixels-inside-wrap=30
+#name={{theme-name}}
+#version={{theme-version}}
 
 [Tag strong]
 foreground={{bold-color}}
