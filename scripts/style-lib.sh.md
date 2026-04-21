@@ -25,6 +25,6 @@ chmod u+x style-lib.sh && ln -sf $(pwd)/style-lib.sh ~/.local/bin/style-lib.sh &
 *style-lib.sh*
 ```bash
 #!/bin/bash
-echo "start style script"
+echo "start style script" > ~/.config/style/log
 source config.sh '.config/style/config'
 ```
