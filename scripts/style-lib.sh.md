@@ -25,13 +25,6 @@ chmod u+x style-lib.sh && ln -sf $(pwd)/style-lib.sh ~/.local/bin/style-lib.sh &
 *style-lib.sh*
 ```bash
 #!/bin/bash
+echo "start style script"
 source config.sh '.config/style/config'
 ```
-
-style_path() {
-    val="$(yq -oy -p toml ".${1}" ~/.config/style/config)";
-    if [ "${val}" = "__UNDEFINED__" ]; then
-        val="$(yq -oy -p toml ".${1}" ~/.config/style/config-defaults)";
-    fi
-    printf -- "%s" "${val}";
-}
