@@ -26,6 +26,10 @@ chmod u+x atom-one-light.json && ln -sf $(pwd)/atom-one-light.json ~/.local/bin/
 *atom-one-light.json*
 ```json
 {
+   "Meta": {
+      "name": "atom-one-light",
+      "version": "1.0"
+   },
    "Normal": {
       "text-color": "#434c5e",
       "background-color": "#f5f5f5",

@@ -1,5 +1,5 @@
 #!/bin/bash
-source config-style.sh
+source style-lib.sh
 themeDir="$(config_get themeDir)"
 installDir="$(config_get installDir)"
 #themeFile="$1"

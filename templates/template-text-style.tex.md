@@ -20,30 +20,7 @@ noweb.py -Rtemplate-text-style.tex template-text-style.tex.md > template-text-st
 
 *template-text-style.tex*
 ```latex
-\definecolor{color-text}{HTML}{ {{text-color}} }
-
-\definecolor{color-background-text}{HTML}{ {{text-background-color}} }
-
-\definecolor{color-section}{HTML}{ {{section-color}} }
-
-\definecolor{color-important}{HTML}{ {{section-color}} }
-
-\definecolor{color-index}{HTML}{ {{index-color}} }
-
-\definecolor{color-link}{HTML}{ {{link-color}} }
-
-\definecolor{page-color-link}{HTML}{ {{page-link-color}} }
-
-\definecolor{color-bold}{HTML}{ {{bold-color}} }
-
-\definecolor{color-emphasis}{HTML}{ {{emphasis-color}} }
-
-\definecolor{color-mark}{HTML}{ {{mark-color}} }
-
-\definecolor{color-strike}{HTML}{ {{strike-color}} }
-
-\definecolor{color-verbatim}{HTML}{ {{verbatim-color}} }
-
+\input{text-theme.tex}
 
 %--- markup of latex
 

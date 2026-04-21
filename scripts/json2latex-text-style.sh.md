@@ -25,35 +25,55 @@ chmod u+x json2latex-text-style.sh && ln -sf $(pwd)/json2latex-text-style.sh ~/.
 *json2latex-text-style.sh*
 ```bash
 #!/bin/bash
-jsonFile="$1"
+source style-lib.sh
+jsonFile="$(basename $1)"
+jsonFolder=$(dirname "$(realpath "$jsonFile")")
+installFolder="$(config_get installDir)"
+cd $installFolder
+#echo $installFolder
 jsonFilename="$(basename $jsonFile .json)"
-styleFile="$jsonFilename-text-style.tex"
+#styleFile="$jsonFilename-text-style.tex"
+themeFile="$jsonFilename-text-theme.tex"
 request=$(yad --title="Convert json to latex-text-style.tex?" --text="" \
 	--form --width 500 --separator="~" --item-separator=","  \
 	--field="Filename" \
-	"$styleFile")
+	"$themeFile")
 if [ ! $? -eq 1 ];
 then
-   cp text-style.tex text-style.tex.back
-   cp template-text-style.tex "$styleFile"
-   #sed -i "s/{{font}}/$(jq -r '."Normal"."font"' $jsonFile)/g" "$styleFile"style
-   #sed -i "s/{{font-size}}/$(jq -r '."Normal"."font-size"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{text-color}}/$(jq -r '."Normal"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{text-background-color}}/$(jq -r '."Normal"."background-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{section-color}}/$(jq -r '."Section"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{bold-color}}/$(jq -r '."Bold"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{emphasis-color}}/$(jq -r '."Emphasis"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{mark-color}}/$(jq -r '."Mark"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{mark-background-color}}/$(jq -r '."Mark"."background-text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{strike-color}}/$(jq -r '."Strike"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{strike-through}}/$(jq -r '."Strike"."strike-through"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{link-color}}/$(jq -r '."Link"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{page-link-color}}/$(jq -r '."Page-link"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{indent-color}}/$(jq -r '."Indent"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{code-color}}/$(jq -r '."Code"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{verbatim-color}}/$(jq -r '."Verbatim"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{tag-color}}/$(jq -r '."Tag"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   sed -i "s/{{index-color}}/$(jq -r '."Index"."text-color"' $jsonFile | sed "s/#//g")/g" "$styleFile"
-   cp "$styleFile" text-style.tex
+   #cp themes/text-style.tex themes/text-style.tex.back
+   cp themes/text-theme.tex themes/text-theme.tex.back
+   cp templates/template-text-theme.tex themes/"$themeFile"
+   declare -A tags=(["theme-name"]="\"Meta\".\"name\"" ["theme-version"]="\"Meta\".\"version\"" ["text-color"]="\"Normal\".\"text-color\"" ["text-background-color"]="\"Normal\".\"background-color\"" ["section-color"]="\"Section\".\"text-color\"" ["bold-color"]="\"Bold\".\"text-color\"" ["emphasis-color"]="\"Emphasis\".\"text-color\"" ["mark-color"]="\"Mark\".\"text-color\"" ["mark-background-color"]="\"Mark\".\"background-color\"" ["strike-color"]="\"Strike\".\"text-color\"" ["strike-through"]="\"Strike\".\"strike-through\"" ["link-color"]="\"Link\".\"text-color\"" ["page-link-color"]="\"Page-link\".\"text-color\"" ["indent-color"]="\"Indent\".\"text-color\"" ["code-color"]="\"Code\".\"text-color\"" ["verbatim-color"]="\"Verbatim\".\"text-color\"" ["tag-color"]="\"Tag\".\"text-color\"" ["index-color"]="\"Index\".\"text-color\"")
+   #echo "${tags[theme-name]}"
+   for key in "${!tags[@]}"; do
+      sed -i "s/{{$key}}/$(yq -r ".${tags[$key]}" "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   done
+   cp themes/"$themeFile" themes/text-theme.tex
 fi
+notify-send -a "json2latex-text-style.sh completed" "" "$(date +"%Y-%m-%d") fertig" 
 ```
+
+
+```bash
+   #sed -i "s/{{font}}/$(jq -r '."Normal"."font"' "$jsonFolder"/"$jsonFile")/g" themes/"$themeFile"
+   #sed -i "s/{{font-size}}/$(jq -r '."Normal"."font-size"' "$jsonFolder"/"$jsonFile")/g" themes/"$themeFile"
+   sed -i "s/{{theme-name}}/$(jq -r '."Meta"."name"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{theme-version}}/$(jq -r '."Meta"."version"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{text-color}}/$(jq -r '."Normal"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{text-background-color}}/$(jq -r '."Normal"."background-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{section-color}}/$(jq -r '."Section"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{bold-color}}/$(jq -r '."Bold"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{emphasis-color}}/$(jq -r '."Emphasis"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{mark-color}}/$(jq -r '."Mark"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{mark-background-color}}/$(jq -r '."Mark"."background-text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{strike-color}}/$(jq -r '."Strike"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{strike-through}}/$(jq -r '."Strike"."strike-through"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{link-color}}/$(jq -r '."Link"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{page-link-color}}/$(jq -r '."Page-link"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{indent-color}}/$(jq -r '."Indent"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{code-color}}/$(jq -r '."Code"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{verbatim-color}}/$(jq -r '."Verbatim"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{tag-color}}/$(jq -r '."Tag"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+   sed -i "s/{{index-color}}/$(jq -r '."Index"."text-color"' "$jsonFolder"/"$jsonFile" | sed "s/#//g")/g" themes/"$themeFile"
+```
+

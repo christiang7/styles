@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=inode/directory;
+Actions=template-json-theme;
+X-KDE-Priority=TopLevel
+X-KDE-Submenu=json-theme
+
+[Desktop Action template-json-theme]
+Name=template-json-theme.sh
+Icon=audio
+Exec=rm ~/.config/style/log && template-json-theme.sh %f 2>&1 | tee ~/.config/style/log

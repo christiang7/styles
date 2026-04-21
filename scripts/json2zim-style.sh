@@ -1,5 +1,10 @@
 #!/bin/bash
-jsonFile="$1"
+source style-lib.sh
+jsonFile="$(basename $1)"
+jsonFolder=$(dirname "$(realpath "$jsonFile")")
+installFolder="$(config_get installDir)"
+cd $installFolder
+#echo $installFolder
 jsonFilename="$(basename $jsonFile .json)"
 styleFile="$jsonFilename-zim-style.conf"
 request=$(yad --title="Convert json to style.conf?" --text="" \
@@ -8,22 +13,12 @@ request=$(yad --title="Convert json to style.conf?" --text="" \
 	"$styleFile")
 if [ ! $? -eq 1 ];
 then
-   cp style.conf style.conf.back
-   cp template-zim-style.conf "$styleFile"
-   sed -i "s/{{font}}/$(jq -r '."Normal"."font"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{font-size}}/$(jq -r '."Normal"."font-size"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{section-color}}/$(jq -r '."Section"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{bold-color}}/$(jq -r '."Bold"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{emphasis-color}}/$(jq -r '."Emphasis"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{mark-color}}/$(jq -r '."Mark"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{mark-background-color}}/$(jq -r '."Mark"."background-text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{strike-color}}/$(jq -r '."Strike"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{strike-through}}/$(jq -r '."Strike"."strike-through"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{link-color}}/$(jq -r '."Link"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{page-link-color}}/$(jq -r '."Page-link"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{indent-color}}/$(jq -r '."Indent"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{code-color}}/$(jq -r '."Code"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{verbatim-color}}/$(jq -r '."Verbatim"."text-color"' $jsonFile)/g" "$styleFile"
-   sed -i "s/{{tag-color}}/$(jq -r '."Tag"."text-color"' $jsonFile)/g" "$styleFile"
-   cp "$styleFile" style.conf
+   cp themes/style.conf themes/style.conf.back
+   cp templates/template-zim-style.conf themes/"$styleFile"
+   declare -A tags=(["theme-name"]="\"Meta\".\"name\"" ["theme-version"]="\"Meta\".\"version\"" ["font"]="\"Normal\".\"font\"" ["font-size"]="\"Normal\".\"font-size\"" ["text-color"]="\"Normal\".\"text-color\"" ["text-background-color"]="\"Normal\".\"background-color\"" ["section-color"]="\"Section\".\"text-color\"" ["bold-color"]="\"Bold\".\"text-color\"" ["emphasis-color"]="\"Emphasis\".\"text-color\"" ["mark-color"]="\"Mark\".\"text-color\"" ["mark-background-color"]="\"Mark\".\"background-color\"" ["strike-color"]="\"Strike\".\"text-color\"" ["strike-through"]="\"Strike\".\"strike-through\"" ["link-color"]="\"Link\".\"text-color\"" ["page-link-color"]="\"Page-link\".\"text-color\"" ["indent-color"]="\"Indent\".\"text-color\"" ["code-color"]="\"Code\".\"text-color\"" ["verbatim-color"]="\"Verbatim\".\"text-color\"" ["tag-color"]="\"Tag\".\"text-color\"" ["index-color"]="\"Index\".\"text-color\"")
+   #echo "${tags[theme-name]}"
+   for key in "${!tags[@]}"; do
+      sed -i "s/{{$key}}/$(yq -r ".${tags[$key]}" "$jsonFolder"/"$jsonFile")/g" themes/"$styleFile"
+   done
+   cp themes/"$styleFile" themes/style.conf
 fi

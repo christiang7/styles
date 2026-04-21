@@ -25,7 +25,7 @@ chmod u+x update-system-themes.sh && ln -sf $(pwd)/update-system-themes.sh ~/.lo
 *update-system-themes.sh*
 ```bash
 #!/bin/bash
-source config-style.sh
+source style-lib.sh
 themeDir="$(config_get themeDir)"
 installDir="$(config_get installDir)"
 #themeFile="$1"

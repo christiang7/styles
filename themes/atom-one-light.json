@@ -1,4 +1,8 @@
 {
+   "Meta": {
+      "name": "atom-one-light",
+      "version": "1.0"
+   },
    "Normal": {
       "text-color": "#434c5e",
       "background-color": "#f5f5f5",

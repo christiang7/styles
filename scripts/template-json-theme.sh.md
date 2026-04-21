@@ -55,10 +55,10 @@ the first line is needed for shell scripts
 *preamble*
 ```bash
 #!/bin/bash
-source config.sh; # load the config library functions
+source style-lib.sh; # load the config library functions
 templateDir="$(config_get templateDir)"
-author="$(config_get author)"
 source tt-lib.sh;
+author="$(config_get author)"
 ```
 
 ### Request
@@ -116,10 +116,10 @@ then
 	esac
 
 	
-	if [[ $gitinit == TRUE ]];
-	then
-		#*git init}}
-	fi
+	#if [[ $gitinit == TRUE ]];
+	#then
+		##*git init}}
+	#fi
 	
 	notify-send -a "Created template $File" "" "$(date +"%Y-%m-%d") fertig"
 fi

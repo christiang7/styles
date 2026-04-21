@@ -1,8 +1,8 @@
 #!/bin/bash
-source config.sh; # load the config library functions
+source style-lib.sh; # load the config library functions
 templateDir="$(config_get templateDir)"
-author="$(config_get author)"
 source tt-lib.sh;
+author="$(config_get author)"
 
 yadSwitch=$2
 
@@ -65,14 +65,10 @@ then
 	esac
 
 
-	if [[ $gitinit == TRUE ]];
-	then
-		cd "$foldertex"
-		git init
-		echo -e "*.log\n*.out\nMAKE" > .gitignore
-		git add * .gitignore
-		git commit -a -m "init git"
-	fi
+	#if [[ $gitinit == TRUE ]];
+	#then
+		##*git init}}
+	#fi
 
 	notify-send -a "Created template $File" "" "$(date +"%Y-%m-%d") fertig"
 fi
