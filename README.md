@@ -1,10 +1,10 @@
-# style
-Standards for a colored formulae and quantities like coloring in the text editors.
+# Style
+Scripts and templates for zim wiki and latex documents like in text editors.
 
 The markdown file has all color definitions for the most used programming languages and formalae.
 
-[color-definitions.md](color-definitions.md)
+[markdown test](test/markdown-test.md)
 
-[latex test file](test-color_tex/test-color.md)
+[latex test file](test/test-color_tex/test-color.tex.md)
 
-[the latex pdf file](test-color_tex/test-color.pdf)
+[the latex pdf file](test/test-color_tex/test-color.pdf)
