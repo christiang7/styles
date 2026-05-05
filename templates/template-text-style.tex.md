@@ -24,6 +24,11 @@ noweb.py -Rtemplate-text-style.tex template-text-style.tex.md > template-text-st
 
 %--- markup of latex
 
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
 %\newcommand{\cpart}[1]{\textcolor{color-headline}{\part{#1}}}
 
 %\newcommand{\csection}[1]{\textcolor{color-headline}{\section{#1}}}
@@ -36,7 +41,7 @@ noweb.py -Rtemplate-text-style.tex template-text-style.tex.md > template-text-st
 
 \newcommand{\cemph}[1]{\textcolor{color-emphasis}{\emph{#1}}}
 
-\newcommand{\cund}[1]{\textcolor{color-mark}{\underline{#1}}}
+\newcommand{\cund}[1]{\textcolor{color-mark}{\myuline{#1}}}
 
 \newcommand{\csf}[1]{\textcolor{color-code}{\textsf{#1}}}
 

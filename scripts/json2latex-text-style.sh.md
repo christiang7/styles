@@ -40,7 +40,7 @@ request=$(yad --title="Convert json to latex-text-style.tex?" --text="" \
 	"$themeFile")
 if [ ! $? -eq 1 ];
 then
-   #cp "$jsonFolder"/text-theme.tex "$jsonFolder"/text-theme.tex.back
+   cp templates/template-text-style.tex "$jsonFolder"/text-style.tex
    cp templates/template-text-theme.tex "$jsonFolder"/"$themeFile"
    declare -A tags=(["theme-name"]="\"Meta\".\"name\"" ["theme-version"]="\"Meta\".\"version\"" ["text-color"]="\"Normal\".\"text-color\"" ["text-background-color"]="\"Normal\".\"background-color\"" ["section-color"]="\"Section\".\"text-color\"" ["bold-color"]="\"Bold\".\"text-color\"" ["emphasis-color"]="\"Emphasis\".\"text-color\"" ["mark-color"]="\"Mark\".\"text-color\"" ["mark-background-color"]="\"Mark\".\"background-color\"" ["strike-color"]="\"Strike\".\"text-color\"" ["strike-through"]="\"Strike\".\"strike-through\"" ["link-color"]="\"Link\".\"text-color\"" ["page-link-color"]="\"Page-link\".\"text-color\"" ["indent-color"]="\"Indent\".\"text-color\"" ["code-color"]="\"Code\".\"text-color\"" ["verbatim-color"]="\"Verbatim\".\"text-color\"" ["tag-color"]="\"Tag\".\"text-color\"" ["index-color"]="\"Index\".\"text-color\"")
    #echo "${tags[theme-name]}"
