@@ -43,6 +43,8 @@ noweb.py -Rtemplate-text-style.tex template-text-style.tex.md > template-text-st
 
 \newcommand{\cund}[1]{\textcolor{color-mark}{\myuline{#1}}}
 
+\newcommand{\clink}[1]{\textcolor{blue}{\myuline{#1}}}
+
 \newcommand{\csf}[1]{\textcolor{color-code}{\textsf{#1}}}
 
 %\newcommand{\cimp}[1]{\textcolor{color-important}{\textbf{#1}}}
