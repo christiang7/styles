@@ -1,4 +1,3 @@
-===== atom-one-light.json =====
 # atom-one-light.json
 Created 2026-04-14
 
@@ -22,6 +21,10 @@ noweb.py -Ratom-one-light.json atom-one-light.json.md > atom-one-light.json && e
 ```bash
 chmod u+x atom-one-light.json && ln -sf $(pwd)/atom-one-light.json ~/.local/bin/atom-one-light.json && echo 'fertig'
 ```
+
+
+"Indent": {
+      "text-color": "#9caeeb",
 
 *atom-one-light.json*
 ```json
@@ -105,7 +108,7 @@ chmod u+x atom-one-light.json && ln -sf $(pwd)/atom-one-light.json ~/.local/bin/
       "strike-through": false
    },
    "Indent": {
-      "text-color": "#9caeeb",
+      "text-color": "#05b0b9",
       "bold": false,
       "italic": false,
       "underline": false,
