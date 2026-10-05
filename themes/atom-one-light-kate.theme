@@ -203,6 +203,10 @@
             "List: Strong-Emphasis Text": {
                 "selected-text-color": "#f2ae49",
                 "text-color": "#f2ae49"
+            },
+            "List: Emphasis Text": {
+                "selected-text-color": "#e45649",
+                "text-color": "#e45649"
             }
         },
         "Python": {
